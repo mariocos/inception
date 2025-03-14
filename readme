@@ -1,0 +1,33 @@
+Hello, This is my "inception" project.
+
+Its a simple Docker exercise using nginx, wordpress and mariadb.
+
+My objective is to create a Makefile that configures a basic file structure and run docker-compose
+with a yaml file wich will launch the respective services.
+
+/*-------------------*/
+       nginx
+/*-------------------*/
+
+Nginx like any other service requires its own dockerfile, and a .conf file to setup.
+
+html files is good practice to be in /etc/www/.
+nginx .conf is good practice to be in /etc/nginx/.
+
+docker file part:
+
+nginx comands:
+"sudo nginx -t" tests the syntax of a .conf file 
+
+add .conf file to the right place 
+
+sudo cp nginx.conf /etc/nginx/nginx.conf
+
+
+docker compose 
+
+-f specifies file path for the yaml
+
+-d to detach and run in background 
+
+--build will make it generate images for the services.
