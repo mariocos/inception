@@ -14,6 +14,8 @@ Nginx like any other service requires its own dockerfile, and a .conf file to se
 html files is good practice to be in /etc/www/.
 nginx .conf is good practice to be in /etc/nginx/.
 
+
+
 docker file part:
 
 nginx comands:
@@ -23,6 +25,13 @@ add .conf file to the right place
 
 sudo cp nginx.conf /etc/nginx/nginx.conf
 
+how to restart nginx
+sudo systemctl start nginx
+if the .conf file is already in the suposed folder it should already be up
+if you want to specify the .conf file you have to do so with the comand:
+sudo nginx -c [path to file]
+and reload
+sudo systemctl reload nginx
 
 docker compose 
 
