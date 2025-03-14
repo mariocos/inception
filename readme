@@ -40,3 +40,7 @@ docker compose
 -d to detach and run in background 
 
 --build will make it generate images for the services.
+
+/* docker  */
+
+make sure you are in the docker group
