@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mariadb:
+    build: ./srcs/mariadb
+    image: my_mariadb
+    container_name: mariadb_container
+    restart: unless-stopped
+    expose:
+      - "3306"
+    env_file:
+      - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - my-network
+
+  wordpress:
+    depends_on:
+      - mariadb
+    build: ./srcs/wordpress
+    image: my_wordpress
+    container_name: wordpress_container
+    restart: unless-stopped
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - my-network
+
+  nginx:
+    depends_on:
+      - wordpress
+    build: ./srcs/nginx
+    image: my_nginx
+    container_name: nginx_container
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - my-network
+
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${PWD}/data/wordpress_data
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${PWD}/data/mariadb_data
+
+networks:
+  my-network:
+    driver: bridge

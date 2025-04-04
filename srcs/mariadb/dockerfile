@@ -1,0 +1,12 @@
+FROM debian:oldstable
+
+ARG PCKGS="mariadb-server"
+
+RUN apt update && apt upgrade -y && apt install -y $PCKGS
+
+COPY maria.sh /home/
+RUN chmod 777 /home/maria.sh
+
+ENTRYPOINT ["/home/maria.sh"]
+
+CMD ["mysqld_safe"]

@@ -1,13 +1,18 @@
 FROM debian:oldstable
 
-ARG PCKGS="nginx"
+# Install necessary packages
+ARG PACKAGES="nginx openssl"
+RUN apt update && apt upgrade -y && apt install -y $PACKAGES
 
-RUN apt update && apt upgrade -y && apt install -y $PCKGS
+# Copy SSL certificates
+COPY certificates/localhost.crt /etc/ssl/certs/
+COPY certificates/localhost.key /etc/ssl/private/
 
-COPY nginx.conf /etc/nginx
+# Copy Nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY index.html /usr/share/nginx/html/index.html
+# Expose HTTPS port
+EXPOSE 443
 
-EXPOSE 81
-
+# Run Nginx
 CMD ["nginx", "-g", "daemon off;"]
