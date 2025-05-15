@@ -38,17 +38,17 @@ setup:
 # Build all services
 build:
 	@echo "Building Docker images..."
-	docker-compose -f $(COMPOSE_FILE) build
+	docker compose -f $(COMPOSE_FILE) build
 
 # Start all services
 up:
 	@echo "Starting services..."
-	docker-compose -f $(COMPOSE_FILE) up -d
+	docker compose -f $(COMPOSE_FILE) up -d
 
 # Stop all services
 down:
 	@echo "Stopping services..."
-	docker-compose -f $(COMPOSE_FILE) down
+	docker compose -f $(COMPOSE_FILE) down
 
 # Restart all services
 restart: down up
@@ -56,21 +56,21 @@ restart: down up
 # Show status of containers
 status:
 	@echo "Container status:"
-	docker-compose -f $(COMPOSE_FILE) ps
+	docker compose -f $(COMPOSE_FILE) ps
 
 # Show logs
 logs:
-	docker-compose -f $(COMPOSE_FILE) logs
+	docker compose -f $(COMPOSE_FILE) logs
 
 # Follow logs
 follow:
-	docker-compose -f $(COMPOSE_FILE) logs -f
+	docker compose -f $(COMPOSE_FILE) logs -f
 
 # Clean up (remove containers, images, volumes, networks)
 clean: down
 	@echo "Removing containers, images, and networks..."
-	docker-compose -f $(COMPOSE_FILE) rm -f
-	docker-compose -f $(COMPOSE_FILE) down --rmi all --remove-orphans
+	docker compose -f $(COMPOSE_FILE) rm -f
+	docker compose -f $(COMPOSE_FILE) down --rmi all --remove-orphans
 
 # Clean everything including data volumes
 fclean: clean
